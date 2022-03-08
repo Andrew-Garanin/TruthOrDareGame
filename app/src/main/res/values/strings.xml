@@ -2,4 +2,10 @@
     <string name="app_name">Truth Or Dare Game</string>
     <string name="start_button">Начать</string>
     <string name="rules_button">Правила</string>
+    <string name="add_question_button">Добавить вопрос</string>
+    <string name="add_action_button">Добавить действие</string>
+    <string name="settings_label">Настройки</string>
+    <string name="language_button">Язык</string>
+    <string name="rules_label">Правила игры</string>
+    <string name="rules_content">1. Выбирайте, говорить правду или совершать действие\n2. Отвечайте на вопрос честно или выполняйте задание\n3. После этого очередь переходит к другому игроку</string>
 </resources>
