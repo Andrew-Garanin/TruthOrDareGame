@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/color_primary">
+
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@null"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_baseline_settings_24"
+            tools:ignore="RtlHardcoded,SpeakableTextPresentCheck" />
+
+        <Button
+            android:id="@+id/buttonStart"
+            style="@style/activity_main_buttons"
+            android:text="@string/start_button"
+            app:cornerRadius="15dp"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/buttonRules"
+            style="@style/activity_main_buttons"
+            android:layout_below="@+id/buttonStart"
+            app:cornerRadius="15dp"
+            android:text="@string/rules_button"
+            tools:ignore="RtlHardcoded" />
+
+    </RelativeLayout>
+</layout>
