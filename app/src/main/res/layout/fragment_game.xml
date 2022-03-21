@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout android:id="@+id/GameActivityRelativeLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/color_primary">
+
+        <Button
+            android:id="@+id/buttonTruth"
+            style="@style/activity_main_buttons"
+            android:text="@string/truth_button"
+            app:cornerRadius="15dp"
+            tools:ignore="RtlHardcoded" />
+
+        <Button
+            android:id="@+id/buttonAction"
+            style="@style/activity_main_buttons"
+            android:layout_below="@+id/buttonTruth"
+            android:text="@string/action_button"
+            app:cornerRadius="15dp"
+            tools:ignore="RtlHardcoded" />
+
+    </RelativeLayout>
+</layout>
