@@ -10,11 +10,25 @@
         android:background="@color/color_primary">
 
         <TextView
+            android:id="@+id/textTimer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50sp"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:gravity="center"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:textAlignment="center"
+            android:textSize="24sp" />
+
+        <TextView
             android:id="@+id/textContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="120sp"
+            android:layout_below="@+id/textTimer"
+            android:layout_marginTop="50sp"
             android:fontFamily="@font/roboto_condensed_bold"
             android:gravity="center"
             android:minWidth="48dp"
@@ -26,7 +40,7 @@
             android:id="@+id/buttongoNext"
             style="@style/activity_main_buttons"
             android:layout_below="@+id/textContent"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/continue_button"
             app:cornerRadius="15dp"
