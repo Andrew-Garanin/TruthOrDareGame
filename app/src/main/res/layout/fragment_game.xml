@@ -11,6 +11,7 @@
         <Button
             android:id="@+id/buttonTruth"
             style="@style/activity_main_buttons"
+            android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/truth_button"
             app:cornerRadius="15dp"
             tools:ignore="RtlHardcoded" />
@@ -19,6 +20,7 @@
             android:id="@+id/buttonAction"
             style="@style/activity_main_buttons"
             android:layout_below="@+id/buttonTruth"
+            android:fontFamily="@font/roboto_condensed_bold"
             android:text="@string/action_button"
             app:cornerRadius="15dp"
             tools:ignore="RtlHardcoded" />

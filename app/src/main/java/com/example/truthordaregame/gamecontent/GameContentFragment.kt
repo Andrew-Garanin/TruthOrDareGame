@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,11 +14,6 @@ import androidx.navigation.fragment.navArgs
 import com.example.truthordaregame.R
 import com.example.truthordaregame.databinding.FragmentGameContentBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GameContentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GameContentFragment : Fragment() {
 
     private lateinit var viewModel: GameContentViewModel
@@ -26,13 +22,20 @@ class GameContentFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentGameContentBinding>(inflater,
-            R.layout.fragment_game_content, container, false)
-
+        val binding = DataBindingUtil.inflate<FragmentGameContentBinding>(inflater, R.layout.fragment_game_content, container, false)
         val gameContentFragmentArgs by navArgs<com.example.truthordaregame.gamecontent.GameContentFragmentArgs>()
 
-        viewModelFactory = GameContentViewModelFactory(gameContentFragmentArgs.content)
+        //----------------------Настройки ViewModel----------------------
+        viewModelFactory = GameContentViewModelFactory(gameContentFragmentArgs.content, gameContentFragmentArgs.contentType)
         viewModel = ViewModelProvider(this, viewModelFactory).get(GameContentViewModel::class.java)
+
+        viewModel.contentType.observe(viewLifecycleOwner, Observer { newContentType ->
+            val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
+            if (newContentType == 1)
+                actionBar?.setTitle(R.string.truth_button)
+            else
+                actionBar?.setTitle(R.string.action_button)
+        })
 
         viewModel.content.observe(viewLifecycleOwner, Observer {   newContent ->
             binding.textContent.text = newContent
@@ -41,7 +44,6 @@ class GameContentFragment : Fragment() {
         binding.buttongoNext.setOnClickListener{
             it.findNavController().navigateUp()
         }
-
         return binding.root
     }
 }

@@ -2,13 +2,12 @@ package com.example.truthordaregame.contentlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.truthordaregame.R
 import com.example.truthordaregame.database.Question
-import com.google.android.filament.View
 
 class QuestionsListAdapter(viewModel: ContentListViewModel): RecyclerView.Adapter<ContentItemViewHolder>(){
 
@@ -27,6 +26,7 @@ class QuestionsListAdapter(viewModel: ContentListViewModel): RecyclerView.Adapte
 
         holder.deleteButton.setOnClickListener {
             viewModel.onDeleteQuestion(item.questionID)
+            Toast.makeText(viewModel.getApplication(), it.context.getResources().getString(R.string.question_deleted_successfully), Toast.LENGTH_SHORT).show()
         }
 
         holder.card.setOnClickListener{

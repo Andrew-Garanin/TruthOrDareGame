@@ -11,13 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.truthordaregame.R
+import com.example.truthordaregame.database.TruthOrDareGameDatabase
 import com.example.truthordaregame.databinding.FragmentGameBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GameFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class GameFragment : Fragment() {
 
     private lateinit var viewModel: GameViewModel
@@ -26,37 +23,48 @@ class GameFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
-            Log.i("GameFragment", "Called ViewModelProvider.get")
+        savedInstanceState: Bundle?
+    ): View? {
 
-            viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        val binding = DataBindingUtil.inflate<FragmentGameBinding>(inflater, R.layout.fragment_game, container, false)
+        val application = requireNotNull(this.activity).application
+        val dao = TruthOrDareGameDatabase.getInstance(application).getTruthOrDareGameDatabaseDao()
 
-            viewModel.currentPair.observe(viewLifecycleOwner, Observer { newPair ->
-                currentPair= newPair
+        //----------------------Настройки ViewModel----------------------
+        val viewModelFactory = GameViewModelFactory(dao, application)
+        viewModel = ViewModelProvider(this, viewModelFactory)
+            .get(GameViewModel::class.java)
+
+        viewModel.currentPair.observe(viewLifecycleOwner, Observer { newPair ->
+            currentPair= newPair
+        })
+
+        viewModel.questions.observe(viewLifecycleOwner, Observer {
+            viewModel.dares.observe(viewLifecycleOwner, Observer {
+                if (viewModel.generalPairList.value?.isEmpty() == true) {
+                    viewModel.resetList()
+                }
+                viewModel.nextPair()
             })
+        })
 
-            val binding = DataBindingUtil.inflate<FragmentGameBinding>(inflater,
-                R.layout.fragment_game, container, false)
-
-            binding.buttonTruth.setOnClickListener{
-                Log.i("GameFragment", currentPair.toString())
-                it.findNavController().navigate(
-                    com.example.truthordaregame.game.GameFragmentDirections.actionGameFragmentToGameContentFragment(
-                        currentPair.first
-                    )
+        binding.buttonTruth.setOnClickListener{
+            Log.i("GameFragment", viewModel.generalPairList.value.toString())
+            it.findNavController().navigate(
+                com.example.truthordaregame.game.GameFragmentDirections.actionGameFragmentToGameContentFragment(
+                    currentPair.first, 1
                 )
-                viewModel.nextPair()
-            }
+            )
+        }
 
-            binding.buttonAction.setOnClickListener{
-                Log.i("GameFragment", currentPair.toString())
-                it.findNavController().navigate(
-                    com.example.truthordaregame.game.GameFragmentDirections.actionGameFragmentToGameContentFragment(
-                        currentPair.second
-                    )
+        binding.buttonAction.setOnClickListener{
+            Log.i("GameFragment", viewModel.generalPairList.value.toString())
+            it.findNavController().navigate(
+                com.example.truthordaregame.game.GameFragmentDirections.actionGameFragmentToGameContentFragment(
+                    currentPair.second, 2
                 )
-                viewModel.nextPair()
-            }
-            return binding.root
+            )
+        }
+        return binding.root
     }
 }

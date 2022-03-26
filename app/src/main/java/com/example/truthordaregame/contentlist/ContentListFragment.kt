@@ -14,15 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.truthordaregame.R
-import com.example.truthordaregame.database.Question
-import java.util.ArrayList
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ContentListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ContentListFragment : Fragment() {
 
     private lateinit var viewModel: ContentListViewModel
@@ -31,25 +24,21 @@ class ContentListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentContentListBinding>(inflater,
-            R.layout.fragment_content_list, container, false)
-
+        val binding = DataBindingUtil.inflate<FragmentContentListBinding>(inflater, R.layout.fragment_content_list, container, false)
         val contentListFragmentArgs by navArgs<com.example.truthordaregame.contentlist.ContentListFragmentArgs>()
-
-
-        //val contentType = contentListFragmentArgs.contentType
         val application = requireNotNull(this.activity).application
         val dao = TruthOrDareGameDatabase.getInstance(application).getTruthOrDareGameDatabaseDao()
 
+        //----------------------Настройки ViewModel----------------------
         val viewModelFactory = ContentListViewModelFactory(dao, application, contentListFragmentArgs.contentType)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ContentListViewModel::class.java)
 
         viewModel.contentType.observe(viewLifecycleOwner, Observer { newContentType ->
 
-            var actionBar = (activity as AppCompatActivity?)!!.supportActionBar
+            val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
 
-            if (newContentType == 1) {
+            if (newContentType == 1) { // Вопрос
                 actionBar?.setTitle(R.string.user_questions)
 
                 val adapter = QuestionsListAdapter(viewModel)
@@ -59,7 +48,7 @@ class ContentListFragment : Fragment() {
                     if (NewQuestions != null)
                         adapter.data = NewQuestions
                 })
-            } else {
+            } else { // Действие
                 actionBar?.setTitle(R.string.user_dares)
 
                 val adapter = DaresListAdapter(viewModel)

@@ -9,12 +9,21 @@
         android:layout_height="fill_parent"
         android:background="@color/color_primary">
 
+        <ImageView
+            android:id="@+id/addNewContentImage"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
+
         <EditText
             android:id="@+id/editTextAddNewContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/addNewContentImage"
             android:layout_centerInParent="true"
             android:ems="15"
+            android:fontFamily="@font/roboto_condensed_bold"
             android:gravity="start|top"
             android:inputType="textMultiLine"
             android:minHeight="48dp"
@@ -26,7 +35,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/editTextAddNewContent"
             android:layout_centerInParent="true"
-            android:text="ОК" />
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/ok_button" />
+
+
 
     </RelativeLayout>
 

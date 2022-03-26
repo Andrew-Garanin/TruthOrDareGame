@@ -9,6 +9,7 @@
     app:contentPadding="10dp"
     android:clickable="true"
     android:focusable="true"
+    app:cardBackgroundColor="#e4c3e1"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -18,18 +19,19 @@
 
         <TextView
             android:id="@+id/textItem"
-            android:textSize="32sp"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_height="wrap_content" />
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:textSize="32sp" />
 
         <Button
             android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Удалить"
-            android:layout_gravity="center_vertical">
-        </Button>
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/delete_button"></Button>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

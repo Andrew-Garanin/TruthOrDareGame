@@ -2,7 +2,6 @@ package com.example.truthordaregame.contentlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
@@ -27,6 +26,7 @@ class DaresListAdapter(viewModel: ContentListViewModel): RecyclerView.Adapter<Co
 
         holder.deleteButton.setOnClickListener {
             viewModel.onDeleteDare(item.dareID)
+            Toast.makeText(viewModel.getApplication(), it.context.getResources().getString(R.string.dare_deleted_successfully), Toast.LENGTH_SHORT).show()
         }
 
         holder.card.setOnClickListener{

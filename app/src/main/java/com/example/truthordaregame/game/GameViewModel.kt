@@ -1,40 +1,42 @@
 package com.example.truthordaregame.game
 
-import android.util.Log
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.example.truthordaregame.database.TruthOrDareGameDatabaseDao
+import kotlinx.coroutines.*
 
-class GameViewModel: ViewModel() {
+class GameViewModel(val dao: TruthOrDareGameDatabaseDao, application: Application): AndroidViewModel(application) {
+
+    var questions = dao.getAllQuestions()
+    var dares = dao.getAllDares()
+    var generalPairList = MutableLiveData<MutableList<Pair<String, String>>>(arrayListOf())
+
     private var _currentPair = MutableLiveData<Pair<String, String>>(Pair("",""))
     val currentPair: LiveData<Pair<String, String>>
         get() = _currentPair
 
-    lateinit var generalPairList: MutableList<Pair<String, String>>
+    fun resetList(){
+        val dareList : MutableList<String> = arrayListOf()
+        val questionList : MutableList<String> = arrayListOf()
 
-    init {
-        resetList()
-        nextPair()
+        for(dare in dares.value!!)
+            dareList.add(dare.dareString)
+        for(question in questions.value!!)
+            questionList.add(question.questionString)
 
-        Log.i("GameViewModel", "GameViewModel created")
-    }
+        dareList.shuffle()
+        questionList.shuffle()
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("GameViewModel", "GameViewModel destroyed")
-    }
-
-    private fun resetList(){
-        generalPairList = mutableListOf<Pair<String, String>>(Pair("Ты гей?", "Пососи мой соск"),Pair("ЛОХ????", "ПОШЕЛ нахЙУ"))
+        var shuffledPairs: MutableList<Pair<String, String>> = arrayListOf()
+        questionList.zip(dareList).forEach { pair ->
+            shuffledPairs.add(pair)
+        }
+        generalPairList.value = shuffledPairs
     }
 
     fun nextPair(){
-        if (generalPairList.isNotEmpty()) {
-            _currentPair.value = generalPairList.removeLast()
-
-        }
-        else
-            //ResetList
-            Log.i("GameViewModel", "The list is empty!")
+        _currentPair.value = generalPairList.value?.removeLast()
     }
 }

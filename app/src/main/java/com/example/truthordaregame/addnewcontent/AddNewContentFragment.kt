@@ -1,10 +1,12 @@
 package com.example.truthordaregame.addnewcontent
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -13,87 +15,82 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.truthordaregame.R
-import com.example.truthordaregame.contentlist.ContentListViewModel
-import com.example.truthordaregame.contentlist.ContentListViewModelFactory
-import com.example.truthordaregame.contentlist.DaresListAdapter
-import com.example.truthordaregame.contentlist.QuestionsListAdapter
 import com.example.truthordaregame.database.TruthOrDareGameDatabase
 import com.example.truthordaregame.databinding.FragmentAddNewContentBinding
-import kotlin.properties.Delegates
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AddNewContentFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AddNewContentFragment : Fragment() {
 
     private lateinit var viewModel: AddNewContentViewModel
-    //private var contentType by Delegates.notNull<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentAddNewContentBinding>(inflater,
-            R.layout.fragment_add_new_content, container, false)
-
-        binding.buttonAddNewContentOK.setOnClickListener{
-            it.findNavController().navigate(R.id.action_addNewContentFragment_to_contentListFragment)
-        }
-
+        val binding = DataBindingUtil.inflate<FragmentAddNewContentBinding>(inflater, R.layout.fragment_add_new_content, container, false)
         val addNewContentFragmentArgs by navArgs<com.example.truthordaregame.addnewcontent.AddNewContentFragmentArgs>()
-        //var contentType = addNewContentFragmentArgs.contentType
-
-
         val application = requireNotNull(this.activity).application
         val dao = TruthOrDareGameDatabase.getInstance(application).getTruthOrDareGameDatabaseDao()
 
+        //---------------------"Адаптация для картинки"---------------------
+        val image: ImageView = binding.addNewContentImage
+        val currentOrientation = resources.configuration.orientation
+        val param = image.layoutParams as ViewGroup.MarginLayoutParams
+        if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            // Portrait
+            val dp = 50 * context?.getResources()?.getDisplayMetrics()?.density!!
+            param.setMargins(dp.toInt(), dp.toInt(), dp.toInt(), dp.toInt())
+        } else {
+            // Landscape
+            val dp = 15 * context?.getResources()?.getDisplayMetrics()?.density!!
+            param.setMargins(0, dp.toInt(), 0, dp.toInt())
+        }
+        image.layoutParams = param
+
+        //----------------------Настройки ViewModel----------------------
         val viewModelFactory = AddNewContentViewModelFactory(dao, application, addNewContentFragmentArgs.contentType)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(AddNewContentViewModel::class.java)
 
         viewModel.contentType.observe(viewLifecycleOwner, Observer { newContentType ->
-            //contentType= newcontentType
-            var actionBar = (activity as AppCompatActivity?)!!.supportActionBar
+            val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
 
-            if (newContentType == 1) {
+            if (newContentType == 1) { // Вопрос
                 actionBar?.setTitle(R.string.add_question)
-                binding.editTextAddNewContent.hint = "Введите новый вопрос"
+                binding.editTextAddNewContent.setHint(R.string.enter_new_question)
             }
-            else
-            {
+            else { // Действие
                 actionBar?.setTitle(R.string.add_dare)
-                binding.editTextAddNewContent.hint = "Введите новое действие"
+                binding.editTextAddNewContent.setHint(R.string.enter_new_dare)
             }
 
             binding.buttonAddNewContentOK.setOnClickListener {
                 val text = binding.editTextAddNewContent.text.toString().trim()
                 if (text != ""){
-                    if (newContentType == 1) {
+                    if (newContentType == 1) { // Вопрос
                         viewModel.onAddQuestion(text)
-                        Toast.makeText(application, "Вопрос добавлен успешно", Toast.LENGTH_SHORT)
+                        Toast.makeText(application, it.context.getResources().getString(R.string.question_added_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
-                    else{
+                    else { // Действие
                         viewModel.onAddDare(text)
-                        Toast.makeText(application, "Действие добавлено успешно", Toast.LENGTH_SHORT)
+                        Toast.makeText(application, it.context.getResources().getString(R.string.dare_added_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
                     it.findNavController().navigateUp()
                 }
                 else{
-                    if (newContentType == 1)
-                        Toast.makeText(application, "Введите вопрос", Toast.LENGTH_SHORT).show()
-                    else
-                        Toast.makeText(application, "Введите действие", Toast.LENGTH_SHORT).show()
-                }
 
+                    if (newContentType == 1) // Вопрос
+                        Toast.makeText(application, it.context.getResources().getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
+                    else // Действие
+                        Toast.makeText(application, it.context.getResources().getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
+                }
             }
         })
 
-
-
+        binding.buttonAddNewContentOK.setOnClickListener{
+            it.findNavController().navigate(R.id.action_addNewContentFragment_to_contentListFragment)
+        }
         return binding.root
     }
 }

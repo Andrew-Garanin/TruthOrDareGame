@@ -20,7 +20,7 @@
     <fragment
         android:id="@+id/addNewContentFragment"
         android:name="com.example.truthordaregame.addnewcontent.AddNewContentFragment"
-        android:label="fragment_add_new_content"
+        android:label=""
         tools:layout="@layout/fragment_add_new_content" >
         <action
             android:id="@+id/action_addNewContentFragment_to_contentListFragment"
@@ -43,7 +43,7 @@
     <fragment
         android:id="@+id/gameContentFragment"
         android:name="com.example.truthordaregame.gamecontent.GameContentFragment"
-        android:label="GameContentFragment"
+        android:label=""
         tools:layout="@layout/fragment_game_content">
         <action
             android:id="@+id/action_gameContentFragment_to_gameFragment"
@@ -53,11 +53,14 @@
         <argument
             android:name="content"
             app:argType="string" />
+        <argument
+            android:name="contentType"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.example.truthordaregame.game.GameFragment"
-        android:label="GameFragment"
+        android:label="@string/choose"
         tools:layout="@layout/fragment_game">
         <action
             android:id="@+id/action_gameFragment_to_gameContentFragment"
@@ -85,7 +88,7 @@
     <fragment
         android:id="@+id/editContentFragment"
         android:name="com.example.truthordaregame.editcontent.EditContentFragment"
-        android:label="EditContentFragment"
+        android:label=""
         tools:layout="@layout/fragment_edit_content" >>
         <action
             android:id="@+id/action_editContentFragment_to_contentListFragment"

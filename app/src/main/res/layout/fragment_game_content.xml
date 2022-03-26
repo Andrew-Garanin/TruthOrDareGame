@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- TODO: Update blank fragment layout -->
-    <RelativeLayout android:id="@+id/SettingsActivityRelativeLayout"
+    <RelativeLayout android:id="@+id/GameContentRelativeLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/color_primary">
@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="120sp"
+            android:fontFamily="@font/roboto_condensed_bold"
             android:gravity="center"
             android:minWidth="48dp"
             android:minHeight="48dp"
@@ -26,7 +27,8 @@
             style="@style/activity_main_buttons"
             android:layout_below="@+id/textContent"
             android:layout_marginTop="100dp"
-            android:text="Дальше"
+            android:fontFamily="@font/roboto_condensed_bold"
+            android:text="@string/continue_button"
             app:cornerRadius="15dp"
             tools:ignore="RtlHardcoded" />
 

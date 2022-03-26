@@ -20,7 +20,10 @@ interface TruthOrDareGameDatabaseDao {
     fun clearQuestions()
 
     @Query("SELECT * FROM question ORDER BY questionID DESC")
-    fun getAllQuestions(): LiveData<List<Question>>
+    fun  getAllQuestions(): LiveData<List<Question>>
+
+    @Query("SELECT * FROM question WHERE isCustom= 1 ORDER BY questionID DESC")
+    fun  getUserQuestions(): LiveData<List<Question>>
 
     @Query("SELECT * FROM question ORDER BY questionID DESC LIMIT 1")
     fun getLastQuestion(): Question?
@@ -43,6 +46,9 @@ interface TruthOrDareGameDatabaseDao {
 
     @Query("SELECT * FROM dare ORDER BY dareID DESC")
     fun getAllDares(): LiveData<List<Dare>>
+
+    @Query("SELECT * FROM dare WHERE isCustom = 1 ORDER BY dareID DESC")
+    fun getUserDares(): LiveData<List<Dare>>
 
     @Query("SELECT * FROM dare ORDER BY dareID DESC LIMIT 1")
     fun getLastDare(): Dare?

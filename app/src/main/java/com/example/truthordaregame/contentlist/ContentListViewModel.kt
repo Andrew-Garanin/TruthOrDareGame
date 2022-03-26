@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.truthordaregame.database.Question
 import com.example.truthordaregame.database.TruthOrDareGameDatabaseDao
 import kotlinx.coroutines.*
 
@@ -16,8 +15,8 @@ class ContentListViewModel(val dao: TruthOrDareGameDatabaseDao, application: App
     val contentType: LiveData<Int>
         get() = _contentType
 
-    val questions = dao.getAllQuestions()
-    val dares = dao.getAllDares()
+    val questions = dao.getUserQuestions()
+    val dares = dao.getUserDares()
 
     init {
         _contentType.value = contentType
