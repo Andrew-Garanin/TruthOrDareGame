@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Правда или действие</string>
+    <string name="start_button">Начать</string>
+    <string name="rules_button">Правила</string>
+    <string name="question_list_button">Собственный список вопросов</string>
+    <string name="action_list_button">Собственный список описаний действий</string>
+    <string name="settings_label">Настройки</string>
+    <string name="language_button">Язык</string>
+    <string name="rules_label">Правила игры</string>
+    <string name="rules_content">1. Выбирайте, говорить правду или совершать действие\n2. Отвечайте на вопрос честно или выполняйте задание\n3. После этого очередь переходит к другому игроку</string>
+    <string name="complete_label">Завершить</string>
+    <string name="truth_button">Правда</string>
+    <string name="action_button">Действие</string>
+    <string name="hello_blank_fragment">Привет бланк фрагмент</string>
+    <string name="user_dares">Пользовательские действия</string>
+    <string name="user_questions">Пользовательские вопросы</string>
+    <string name="add_question">Добавить вопрос</string>
+    <string name="add_dare">Добавить действие</string>
+    <string name="edit_question">Редактировать вопрос</string>
+    <string name="edit_dare">Редактировать действие</string>
+    <string name="continue_button">Дальше</string>
+    <string name="add_button">Добавить</string>
+    <string name="ok_button">Ок</string>
+    <string name="choose">Выбор</string>
+    <string name="enter_new_question">Введите новый вопрос</string>
+    <string name="enter_new_dare">Введите новое действие</string>
+    <string name="question_added_successfully">Вопрос добавлен успешно</string>
+    <string name="dare_added_successfully">Действие добавлено успешно</string>
+    <string name="enter_question">Введите вопрос</string>
+    <string name="enter_dare">Введите действие</string>
+    <string name="question_edited_successfully">Вопрос отредактирован успешно</string>
+    <string name="dare_edited_successfully">Действие отредактировано успешно</string>
+    <string name="delete_button">Удалить</string>
+    <string name="question_deleted_successfully">Вопрос удалён успешно</string>
+    <string name="dare_deleted_successfully">Действие удалено успешно</string>
+</resources>
