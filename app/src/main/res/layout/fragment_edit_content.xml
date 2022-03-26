@@ -10,22 +10,13 @@
 
         <ImageView
             android:id="@+id/editContentImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_centerHorizontal="true"
+            style="@style/squared_images"
             app:srcCompat="@drawable/ic_baseline_edit_24" />
 
         <EditText
             android:id="@+id/editTextEditContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_below="@+id/editContentImage"
-            android:layout_centerInParent="true"
-            android:ems="15"
-            android:fontFamily="@font/roboto_condensed_bold"
-            android:gravity="start|top"
-            android:inputType="textMultiLine"
-            android:minHeight="48dp" />
+            style="@style/text_edit" />
 
         <Button
             android:id="@+id/buttonEditContentContentOK"
