@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.truthordaregame.R
 import com.example.truthordaregame.database.Dare
 
-class DaresListAdapter(viewModel: ContentListViewModel): RecyclerView.Adapter<ContentItemViewHolder>(){
-
-    var viewModel = viewModel
+class DaresListAdapter(var viewModel: ContentListViewModel): RecyclerView.Adapter<ContentItemViewHolder>(){
 
     var data = listOf<Dare>()
         set(value) {
@@ -26,11 +24,11 @@ class DaresListAdapter(viewModel: ContentListViewModel): RecyclerView.Adapter<Co
 
         holder.deleteButton.setOnClickListener {
             viewModel.onDeleteDare(item.dareID)
-            Toast.makeText(viewModel.getApplication(), it.context.getResources().getString(R.string.dare_deleted_successfully), Toast.LENGTH_SHORT).show()
+            Toast.makeText(viewModel.getApplication(), it.context.resources.getString(R.string.dare_deleted_successfully), Toast.LENGTH_SHORT).show()
         }
 
         holder.card.setOnClickListener{
-            it.findNavController().navigate(com.example.truthordaregame.contentlist.ContentListFragmentDirections.actionContentListFragmentToEditContentFragment(item.dareID, item.dareString,2))
+            it.findNavController().navigate(ContentListFragmentDirections.actionContentListFragmentToEditContentFragment(item.dareID, item.dareString,2))
         }
     }
 

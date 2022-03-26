@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.truthordaregame.database.TruthOrDareGameDatabase
 import com.example.truthordaregame.databinding.FragmentContentListBinding
@@ -23,9 +22,9 @@ class ContentListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentContentListBinding>(inflater, R.layout.fragment_content_list, container, false)
-        val contentListFragmentArgs by navArgs<com.example.truthordaregame.contentlist.ContentListFragmentArgs>()
+        val contentListFragmentArgs by navArgs<ContentListFragmentArgs>()
         val application = requireNotNull(this.activity).application
         val dao = TruthOrDareGameDatabase.getInstance(application).getTruthOrDareGameDatabaseDao()
 
@@ -34,7 +33,7 @@ class ContentListFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ContentListViewModel::class.java)
 
-        viewModel.contentType.observe(viewLifecycleOwner, Observer { newContentType ->
+        viewModel.contentType.observe(viewLifecycleOwner, { newContentType ->
 
             val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
 
@@ -44,7 +43,7 @@ class ContentListFragment : Fragment() {
                 val adapter = QuestionsListAdapter(viewModel)
                 binding.contentList.adapter = adapter
 
-                viewModel.questions.observe(viewLifecycleOwner, Observer { NewQuestions ->
+                viewModel.questions.observe(viewLifecycleOwner, { NewQuestions ->
                     if (NewQuestions != null)
                         adapter.data = NewQuestions
                 })
@@ -54,7 +53,7 @@ class ContentListFragment : Fragment() {
                 val adapter = DaresListAdapter(viewModel)
                 binding.contentList.adapter = adapter
 
-                viewModel.dares.observe(viewLifecycleOwner, Observer { NewDares ->
+                viewModel.dares.observe(viewLifecycleOwner, { NewDares ->
                     if (NewDares != null)
                         adapter.data = NewDares
                 })
@@ -62,7 +61,7 @@ class ContentListFragment : Fragment() {
         })
 
         binding.buttonAddNewContent.setOnClickListener{
-            it.findNavController().navigate(com.example.truthordaregame.contentlist.ContentListFragmentDirections.actionContentListFragmentToAddNewContentFragment(
+            it.findNavController().navigate(ContentListFragmentDirections.actionContentListFragmentToAddNewContentFragment(
                 viewModel.contentType.value!!
             ))
         }

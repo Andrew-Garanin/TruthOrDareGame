@@ -15,7 +15,7 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentSettingsBinding>(inflater, R.layout.fragment_settings, container, false)
 
         //---------------------"Адаптация для картинки"---------------------
@@ -24,21 +24,21 @@ class SettingsFragment : Fragment() {
         val param = image.layoutParams as ViewGroup.MarginLayoutParams
         if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
             // Portrait
-            val dp = 50 * context?.getResources()?.getDisplayMetrics()?.density!!
+            val dp = 50 * context?.resources?.displayMetrics?.density!!
             param.setMargins(dp.toInt(), dp.toInt(), dp.toInt(), dp.toInt())
         } else {
             // Landscape
-            val dp = 15 * context?.getResources()?.getDisplayMetrics()?.density!!
+            val dp = 15 * context?.resources?.displayMetrics?.density!!
             param.setMargins(0, dp.toInt(), 0, dp.toInt())
         }
         image.layoutParams = param
 
         binding.buttonQuestionList.setOnClickListener{
-            it.findNavController().navigate(com.example.truthordaregame.SettingsFragmentDirections.actionSettingsFragmentToContentListFragment(1))
+            it.findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToContentListFragment(1))
         }
 
         binding.buttonActionList.setOnClickListener{
-            it.findNavController().navigate(com.example.truthordaregame.SettingsFragmentDirections.actionSettingsFragmentToContentListFragment(2))
+            it.findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToContentListFragment(2))
         }
         return binding.root
     }

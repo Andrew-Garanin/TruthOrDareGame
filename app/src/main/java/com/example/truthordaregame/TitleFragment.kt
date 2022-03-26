@@ -19,7 +19,7 @@ class TitleFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding = DataBindingUtil.inflate<FragmentTitleBinding>(inflater, R.layout.fragment_title, container, false)
 
@@ -29,18 +29,18 @@ class TitleFragment : Fragment() {
         val param = image.layoutParams as ViewGroup.MarginLayoutParams
         if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
             // Portrait
-            val dp = 50 * context?.getResources()?.getDisplayMetrics()?.density!!
+            val dp = 50 * context?.resources?.displayMetrics?.density!!
             param.setMargins(dp.toInt(), dp.toInt(), dp.toInt(), dp.toInt())
         } else {
             // Landscape
-            val dp = 15 * context?.getResources()?.getDisplayMetrics()?.density!!
+            val dp = 15 * context?.resources?.displayMetrics?.density!!
             param.setMargins(0, dp.toInt(), 0, dp.toInt())
         }
         image.layoutParams = param
 
         //---------------------Смайлики---------------------
-        binding.buttonStart.setText(binding.buttonStart.text.toString().plus(String(Character.toChars(0x1F3AE))))
-        binding.buttonRules.setText(binding.buttonRules.text.toString().plus(String(Character.toChars(0x1F4C3))))
+        binding.buttonStart.text = binding.buttonStart.text.toString().plus(String(Character.toChars(0x1F3AE)))
+        binding.buttonRules.text = binding.buttonRules.text.toString().plus(String(Character.toChars(0x1F4C3)))
 
         binding.buttonRules.setOnClickListener{
             it.findNavController().navigate(R.id.action_titleFragment_to_rulesFragment)

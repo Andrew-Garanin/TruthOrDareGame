@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -25,9 +24,9 @@ class AddNewContentFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentAddNewContentBinding>(inflater, R.layout.fragment_add_new_content, container, false)
-        val addNewContentFragmentArgs by navArgs<com.example.truthordaregame.addnewcontent.AddNewContentFragmentArgs>()
+        val addNewContentFragmentArgs by navArgs<AddNewContentFragmentArgs>()
         val application = requireNotNull(this.activity).application
         val dao = TruthOrDareGameDatabase.getInstance(application).getTruthOrDareGameDatabaseDao()
 
@@ -37,11 +36,11 @@ class AddNewContentFragment : Fragment() {
         val param = image.layoutParams as ViewGroup.MarginLayoutParams
         if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
             // Portrait
-            val dp = 50 * context?.getResources()?.getDisplayMetrics()?.density!!
+            val dp = 50 * context?.resources?.displayMetrics?.density!!
             param.setMargins(dp.toInt(), dp.toInt(), dp.toInt(), dp.toInt())
         } else {
             // Landscape
-            val dp = 15 * context?.getResources()?.getDisplayMetrics()?.density!!
+            val dp = 15 * context?.resources?.displayMetrics?.density!!
             param.setMargins(0, dp.toInt(), 0, dp.toInt())
         }
         image.layoutParams = param
@@ -51,7 +50,7 @@ class AddNewContentFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(AddNewContentViewModel::class.java)
 
-        viewModel.contentType.observe(viewLifecycleOwner, Observer { newContentType ->
+        viewModel.contentType.observe(viewLifecycleOwner, { newContentType ->
             val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
 
             if (newContentType == 1) { // Вопрос
@@ -68,12 +67,12 @@ class AddNewContentFragment : Fragment() {
                 if (text != ""){
                     if (newContentType == 1) { // Вопрос
                         viewModel.onAddQuestion(text)
-                        Toast.makeText(application, it.context.getResources().getString(R.string.question_added_successfully), Toast.LENGTH_SHORT)
+                        Toast.makeText(application, it.context.resources.getString(R.string.question_added_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
                     else { // Действие
                         viewModel.onAddDare(text)
-                        Toast.makeText(application, it.context.getResources().getString(R.string.dare_added_successfully), Toast.LENGTH_SHORT)
+                        Toast.makeText(application, it.context.resources.getString(R.string.dare_added_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
                     it.findNavController().navigateUp()
@@ -81,9 +80,9 @@ class AddNewContentFragment : Fragment() {
                 else{
 
                     if (newContentType == 1) // Вопрос
-                        Toast.makeText(application, it.context.getResources().getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(application, it.context.resources.getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
                     else // Действие
-                        Toast.makeText(application, it.context.getResources().getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(application, it.context.resources.getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
                 }
             }
         })

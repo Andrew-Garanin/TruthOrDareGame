@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.truthordaregame.database.TruthOrDareGameDatabaseDao
-import kotlinx.coroutines.*
 
 class GameViewModel(val dao: TruthOrDareGameDatabaseDao, application: Application): AndroidViewModel(application) {
 
@@ -13,7 +12,7 @@ class GameViewModel(val dao: TruthOrDareGameDatabaseDao, application: Applicatio
     var dares = dao.getAllDares()
     var generalPairList = MutableLiveData<MutableList<Pair<String, String>>>(arrayListOf())
 
-    private var _currentPair = MutableLiveData<Pair<String, String>>(Pair("",""))
+    private var _currentPair = MutableLiveData(Pair("",""))
     val currentPair: LiveData<Pair<String, String>>
         get() = _currentPair
 
@@ -29,7 +28,7 @@ class GameViewModel(val dao: TruthOrDareGameDatabaseDao, application: Applicatio
         dareList.shuffle()
         questionList.shuffle()
 
-        var shuffledPairs: MutableList<Pair<String, String>> = arrayListOf()
+        val shuffledPairs: MutableList<Pair<String, String>> = arrayListOf()
         questionList.zip(dareList).forEach { pair ->
             shuffledPairs.add(pair)
         }

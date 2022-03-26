@@ -89,7 +89,7 @@
         android:id="@+id/editContentFragment"
         android:name="com.example.truthordaregame.editcontent.EditContentFragment"
         android:label=""
-        tools:layout="@layout/fragment_edit_content" >>
+        tools:layout="@layout/fragment_edit_content" >
         <action
             android:id="@+id/action_editContentFragment_to_contentListFragment"
             app:destination="@id/contentListFragment"

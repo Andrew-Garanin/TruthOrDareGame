@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.truthordaregame.R
 import com.example.truthordaregame.database.Question
 
-class QuestionsListAdapter(viewModel: ContentListViewModel): RecyclerView.Adapter<ContentItemViewHolder>(){
-
-    var viewModel = viewModel
+class QuestionsListAdapter(var viewModel: ContentListViewModel): RecyclerView.Adapter<ContentItemViewHolder>(){
 
     var data = listOf<Question>()
         set(value) {
@@ -26,11 +24,11 @@ class QuestionsListAdapter(viewModel: ContentListViewModel): RecyclerView.Adapte
 
         holder.deleteButton.setOnClickListener {
             viewModel.onDeleteQuestion(item.questionID)
-            Toast.makeText(viewModel.getApplication(), it.context.getResources().getString(R.string.question_deleted_successfully), Toast.LENGTH_SHORT).show()
+            Toast.makeText(viewModel.getApplication(), it.context.resources.getString(R.string.question_deleted_successfully), Toast.LENGTH_SHORT).show()
         }
 
         holder.card.setOnClickListener{
-            it.findNavController().navigate(com.example.truthordaregame.contentlist.ContentListFragmentDirections.actionContentListFragmentToEditContentFragment(item.questionID, item.questionString, 1))
+            it.findNavController().navigate(ContentListFragmentDirections.actionContentListFragmentToEditContentFragment(item.questionID, item.questionString, 1))
         }
     }
 

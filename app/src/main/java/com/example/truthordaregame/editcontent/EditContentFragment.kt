@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -24,10 +23,10 @@ class EditContentFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding = DataBindingUtil.inflate<FragmentEditContentBinding>(inflater, R.layout.fragment_edit_content, container, false)
-        val editContentFragmentArgs by navArgs<com.example.truthordaregame.editcontent.EditContentFragmentArgs>()
+        val editContentFragmentArgs by navArgs<EditContentFragmentArgs>()
         val application = requireNotNull(this.activity).application
         val dao = TruthOrDareGameDatabase.getInstance(application).getTruthOrDareGameDatabaseDao()
 
@@ -37,11 +36,11 @@ class EditContentFragment : Fragment() {
         val param = image.layoutParams as ViewGroup.MarginLayoutParams
         if (currentOrientation == Configuration.ORIENTATION_PORTRAIT) {
             // Portrait
-            val dp = 50 * context?.getResources()?.getDisplayMetrics()?.density!!
+            val dp = 50 * context?.resources?.displayMetrics?.density!!
             param.setMargins(dp.toInt(), dp.toInt(), dp.toInt(), dp.toInt())
         } else {
             // Landscape
-            val dp = 15 * context?.getResources()?.getDisplayMetrics()?.density!!
+            val dp = 15 * context?.resources?.displayMetrics?.density!!
             param.setMargins(0, dp.toInt(), 0, dp.toInt())
         }
         image.layoutParams = param
@@ -51,7 +50,7 @@ class EditContentFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(EditContentViewModel::class.java)
 
-        viewModel.contentType.observe(viewLifecycleOwner, Observer { newContentType ->
+        viewModel.contentType.observe(viewLifecycleOwner, { newContentType ->
             val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
 
             if (newContentType == 1) // Вопрос
@@ -64,21 +63,21 @@ class EditContentFragment : Fragment() {
                 if (text != ""){
                     if (newContentType == 1) { // Вопрос
                         viewModel.onUpdateQuestion(text)
-                        Toast.makeText(application, it.context.getResources().getString(R.string.question_edited_successfully), Toast.LENGTH_SHORT)
+                        Toast.makeText(application, it.context.resources.getString(R.string.question_edited_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
                     else{ // Действие
                         viewModel.onUpdateDare(text)
-                        Toast.makeText(application,  it.context.getResources().getString(R.string.dare_edited_successfully), Toast.LENGTH_SHORT)
+                        Toast.makeText(application,  it.context.resources.getString(R.string.dare_edited_successfully), Toast.LENGTH_SHORT)
                             .show()
                     }
                     it.findNavController().navigateUp()
                 }
                 else{
                     if (newContentType == 1) // Вопрос
-                        Toast.makeText(application,  it.context.getResources().getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(application,  it.context.resources.getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
                     else // Действие
-                        Toast.makeText(application,  it.context.getResources().getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(application,  it.context.resources.getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
                 }
             }
         })

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,15 +20,15 @@ class GameContentFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = DataBindingUtil.inflate<FragmentGameContentBinding>(inflater, R.layout.fragment_game_content, container, false)
-        val gameContentFragmentArgs by navArgs<com.example.truthordaregame.gamecontent.GameContentFragmentArgs>()
+        val gameContentFragmentArgs by navArgs<GameContentFragmentArgs>()
 
         //----------------------Настройки ViewModel----------------------
         viewModelFactory = GameContentViewModelFactory(gameContentFragmentArgs.content, gameContentFragmentArgs.contentType)
         viewModel = ViewModelProvider(this, viewModelFactory).get(GameContentViewModel::class.java)
 
-        viewModel.contentType.observe(viewLifecycleOwner, Observer { newContentType ->
+        viewModel.contentType.observe(viewLifecycleOwner, { newContentType ->
             val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
             if (newContentType == 1)
                 actionBar?.setTitle(R.string.truth_button)
@@ -37,7 +36,7 @@ class GameContentFragment : Fragment() {
                 actionBar?.setTitle(R.string.action_button)
         })
 
-        viewModel.content.observe(viewLifecycleOwner, Observer {   newContent ->
+        viewModel.content.observe(viewLifecycleOwner, {   newContent ->
             binding.textContent.text = newContent
         })
 

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.truthordaregame.R
@@ -19,12 +18,12 @@ class GameFragment : Fragment() {
 
     private lateinit var viewModel: GameViewModel
 
-    lateinit var currentPair: Pair<String, String>
+    private lateinit var currentPair: Pair<String, String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val binding = DataBindingUtil.inflate<FragmentGameBinding>(inflater, R.layout.fragment_game, container, false)
         val application = requireNotNull(this.activity).application
@@ -35,12 +34,12 @@ class GameFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(GameViewModel::class.java)
 
-        viewModel.currentPair.observe(viewLifecycleOwner, Observer { newPair ->
+        viewModel.currentPair.observe(viewLifecycleOwner, { newPair ->
             currentPair= newPair
         })
 
-        viewModel.questions.observe(viewLifecycleOwner, Observer {
-            viewModel.dares.observe(viewLifecycleOwner, Observer {
+        viewModel.questions.observe(viewLifecycleOwner, {
+            viewModel.dares.observe(viewLifecycleOwner, {
                 if (viewModel.generalPairList.value?.isEmpty() == true) {
                     viewModel.resetList()
                 }
@@ -50,8 +49,7 @@ class GameFragment : Fragment() {
 
         binding.buttonTruth.setOnClickListener{
             Log.i("GameFragment", viewModel.generalPairList.value.toString())
-            it.findNavController().navigate(
-                com.example.truthordaregame.game.GameFragmentDirections.actionGameFragmentToGameContentFragment(
+            it.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameContentFragment(
                     currentPair.first, 1
                 )
             )
@@ -59,8 +57,7 @@ class GameFragment : Fragment() {
 
         binding.buttonAction.setOnClickListener{
             Log.i("GameFragment", viewModel.generalPairList.value.toString())
-            it.findNavController().navigate(
-                com.example.truthordaregame.game.GameFragmentDirections.actionGameFragmentToGameContentFragment(
+            it.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameContentFragment(
                     currentPair.second, 2
                 )
             )
