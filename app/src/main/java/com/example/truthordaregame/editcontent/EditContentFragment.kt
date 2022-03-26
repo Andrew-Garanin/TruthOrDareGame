@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.truthordaregame.ContentType
 import com.example.truthordaregame.R
 import com.example.truthordaregame.database.TruthOrDareGameDatabase
 import com.example.truthordaregame.databinding.FragmentEditContentBinding
@@ -53,35 +54,36 @@ class EditContentFragment : Fragment() {
         viewModel.contentType.observe(viewLifecycleOwner, { newContentType ->
             val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
 
-            if (newContentType == 1) // Вопрос
-                actionBar?.setTitle(R.string.edit_question)
-            else // Действие
-                actionBar?.setTitle(R.string.edit_dare)
+            when(newContentType){
+                ContentType.QUESTION->  actionBar?.setTitle(R.string.edit_question)
+                ContentType.DARE->  actionBar?.setTitle(R.string.edit_dare)
+            }
 
             binding.buttonEditContentContentOK.setOnClickListener {
                 val text = binding.editTextEditContent.text.toString().trim()
                 if (text != ""){
-                    if (newContentType == 1) { // Вопрос
-                        viewModel.onUpdateQuestion(text)
-                        Toast.makeText(application, it.context.resources.getString(R.string.question_edited_successfully), Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    else{ // Действие
-                        viewModel.onUpdateDare(text)
-                        Toast.makeText(application,  it.context.resources.getString(R.string.dare_edited_successfully), Toast.LENGTH_SHORT)
-                            .show()
+                    when(newContentType){
+                        ContentType.QUESTION-> {
+                            viewModel.onUpdateQuestion(text)
+                            Toast.makeText(application, it.context.resources.getString(R.string.question_edited_successfully), Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        ContentType.DARE-> {
+                            viewModel.onUpdateDare(text)
+                            Toast.makeText(application,  it.context.resources.getString(R.string.dare_edited_successfully), Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
                     it.findNavController().navigateUp()
                 }
                 else{
-                    if (newContentType == 1) // Вопрос
-                        Toast.makeText(application,  it.context.resources.getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
-                    else // Действие
-                        Toast.makeText(application,  it.context.resources.getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
+                    when(newContentType){
+                        ContentType.QUESTION-> Toast.makeText(application,  it.context.resources.getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
+                        ContentType.DARE-> Toast.makeText(application,  it.context.resources.getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         })
-
         binding.editTextEditContent.setText(viewModel.contentString.value)
 
         return binding.root

@@ -12,6 +12,7 @@ import com.example.truthordaregame.databinding.FragmentContentListBinding
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.truthordaregame.ContentType
 import com.example.truthordaregame.R
 
 
@@ -36,27 +37,29 @@ class ContentListFragment : Fragment() {
         viewModel.contentType.observe(viewLifecycleOwner, { newContentType ->
 
             val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
+            when(newContentType){
+                ContentType.QUESTION->{
+                    actionBar?.setTitle(R.string.user_questions)
 
-            if (newContentType == 1) { // Вопрос
-                actionBar?.setTitle(R.string.user_questions)
+                    val adapter = QuestionsListAdapter(viewModel)
+                    binding.contentList.adapter = adapter
 
-                val adapter = QuestionsListAdapter(viewModel)
-                binding.contentList.adapter = adapter
+                    viewModel.questions.observe(viewLifecycleOwner, { NewQuestions ->
+                        if (NewQuestions != null)
+                            adapter.data = NewQuestions
+                    })
+                }
+                ContentType.DARE->{
+                    actionBar?.setTitle(R.string.user_dares)
 
-                viewModel.questions.observe(viewLifecycleOwner, { NewQuestions ->
-                    if (NewQuestions != null)
-                        adapter.data = NewQuestions
-                })
-            } else { // Действие
-                actionBar?.setTitle(R.string.user_dares)
+                    val adapter = DaresListAdapter(viewModel)
+                    binding.contentList.adapter = adapter
 
-                val adapter = DaresListAdapter(viewModel)
-                binding.contentList.adapter = adapter
-
-                viewModel.dares.observe(viewLifecycleOwner, { NewDares ->
-                    if (NewDares != null)
-                        adapter.data = NewDares
-                })
+                    viewModel.dares.observe(viewLifecycleOwner, { NewDares ->
+                        if (NewDares != null)
+                            adapter.data = NewDares
+                    })
+                }
             }
         })
 

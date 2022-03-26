@@ -34,11 +34,11 @@ class SettingsFragment : Fragment() {
         image.layoutParams = param
 
         binding.buttonQuestionList.setOnClickListener{
-            it.findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToContentListFragment(1))
+            it.findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToContentListFragment(ContentType.QUESTION))
         }
 
         binding.buttonActionList.setOnClickListener{
-            it.findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToContentListFragment(2))
+            it.findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToContentListFragment(ContentType.DARE))
         }
         return binding.root
     }

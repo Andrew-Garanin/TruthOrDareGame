@@ -13,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.truthordaregame.ContentType
 import com.example.truthordaregame.R
 import com.example.truthordaregame.database.TruthOrDareGameDatabase
 import com.example.truthordaregame.databinding.FragmentAddNewContentBinding
@@ -52,37 +53,43 @@ class AddNewContentFragment : Fragment() {
 
         viewModel.contentType.observe(viewLifecycleOwner, { newContentType ->
             val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
-
-            if (newContentType == 1) { // Вопрос
-                actionBar?.setTitle(R.string.add_question)
-                binding.editTextAddNewContent.setHint(R.string.enter_new_question)
-            }
-            else { // Действие
-                actionBar?.setTitle(R.string.add_dare)
-                binding.editTextAddNewContent.setHint(R.string.enter_new_dare)
+            when(newContentType){
+                ContentType.QUESTION->{
+                    actionBar?.setTitle(R.string.add_question)
+                    binding.editTextAddNewContent.setHint(R.string.enter_new_question)
+                }
+                ContentType.DARE->{
+                    actionBar?.setTitle(R.string.add_dare)
+                    binding.editTextAddNewContent.setHint(R.string.enter_new_dare)
+                }
             }
 
             binding.buttonAddNewContentOK.setOnClickListener {
                 val text = binding.editTextAddNewContent.text.toString().trim()
                 if (text != ""){
-                    if (newContentType == 1) { // Вопрос
-                        viewModel.onAddQuestion(text)
-                        Toast.makeText(application, it.context.resources.getString(R.string.question_added_successfully), Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                    else { // Действие
-                        viewModel.onAddDare(text)
-                        Toast.makeText(application, it.context.resources.getString(R.string.dare_added_successfully), Toast.LENGTH_SHORT)
-                            .show()
+                    when(newContentType){
+                        ContentType.QUESTION->{
+                            viewModel.onAddQuestion(text)
+                            Toast.makeText(application, it.context.resources.getString(R.string.question_added_successfully), Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        ContentType.DARE->{
+                            viewModel.onAddDare(text)
+                            Toast.makeText(application, it.context.resources.getString(R.string.dare_added_successfully), Toast.LENGTH_SHORT)
+                                .show()
+                        }
                     }
                     it.findNavController().navigateUp()
                 }
                 else{
-
-                    if (newContentType == 1) // Вопрос
-                        Toast.makeText(application, it.context.resources.getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
-                    else // Действие
-                        Toast.makeText(application, it.context.resources.getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
+                    when(newContentType){
+                        ContentType.QUESTION->{
+                            Toast.makeText(application, it.context.resources.getString(R.string.enter_question), Toast.LENGTH_SHORT).show()
+                        }
+                        ContentType.DARE->{
+                            Toast.makeText(application, it.context.resources.getString(R.string.enter_dare), Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
             }
         })

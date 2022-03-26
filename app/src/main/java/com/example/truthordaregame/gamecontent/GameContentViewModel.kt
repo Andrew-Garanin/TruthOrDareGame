@@ -4,14 +4,15 @@ import android.os.CountDownTimer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.truthordaregame.ContentType
 
-class GameContentViewModel(content: String, contentType: Int) : ViewModel() {
+class GameContentViewModel(content: String, contentType: ContentType) : ViewModel() {
     private val _content = MutableLiveData<String>()
     val content: LiveData<String>
         get() = _content
 
-    private val _contentType = MutableLiveData<Int>()
-    val contentType: LiveData<Int>
+    private val _contentType = MutableLiveData<ContentType>()
+    val contentType: LiveData<ContentType>
         get() = _contentType
 
     private var _eventGameFinish = MutableLiveData(false)

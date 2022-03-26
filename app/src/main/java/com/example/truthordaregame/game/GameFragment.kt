@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.truthordaregame.ContentType
 import com.example.truthordaregame.R
 import com.example.truthordaregame.database.TruthOrDareGameDatabase
 import com.example.truthordaregame.databinding.FragmentGameBinding
@@ -50,7 +51,7 @@ class GameFragment : Fragment() {
         binding.buttonTruth.setOnClickListener{
             Log.i("GameFragment", viewModel.generalPairList.value.toString())
             it.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameContentFragment(
-                    currentPair.first, 1
+                    currentPair.first, ContentType.QUESTION
                 )
             )
         }
@@ -58,7 +59,7 @@ class GameFragment : Fragment() {
         binding.buttonAction.setOnClickListener{
             Log.i("GameFragment", viewModel.generalPairList.value.toString())
             it.findNavController().navigate(GameFragmentDirections.actionGameFragmentToGameContentFragment(
-                    currentPair.second, 2
+                    currentPair.second, ContentType.DARE
                 )
             )
         }

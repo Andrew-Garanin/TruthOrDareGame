@@ -29,7 +29,7 @@
             app:popUpToInclusive="true" />
         <argument
             android:name="contentType"
-            app:argType="integer" />
+            app:argType="com.example.truthordaregame.ContentType" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -55,7 +55,7 @@
             app:argType="string" />
         <argument
             android:name="contentType"
-            app:argType="integer" />
+            app:argType="com.example.truthordaregame.ContentType" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
@@ -78,12 +78,12 @@
         <action
             android:id="@+id/action_contentListFragment_to_addNewContentFragment"
             app:destination="@id/addNewContentFragment" />
-        <argument
-            android:name="contentType"
-            app:argType="integer" />
         <action
             android:id="@+id/action_contentListFragment_to_editContentFragment"
             app:destination="@id/editContentFragment" />
+        <argument
+            android:name="contentType"
+            app:argType="com.example.truthordaregame.ContentType" />
     </fragment>
     <fragment
         android:id="@+id/editContentFragment"
@@ -103,6 +103,6 @@
             app:argType="string" />
         <argument
             android:name="contentType"
-            app:argType="integer" />
+            app:argType="com.example.truthordaregame.ContentType" />
     </fragment>
 </navigation>

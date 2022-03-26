@@ -4,15 +4,16 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.truthordaregame.ContentType
 import com.example.truthordaregame.database.TruthOrDareGameDatabaseDao
 import kotlinx.coroutines.*
 
-class ContentListViewModel(val dao: TruthOrDareGameDatabaseDao, application: Application, contentType: Int) : AndroidViewModel(application) {
+class ContentListViewModel(val dao: TruthOrDareGameDatabaseDao, application: Application, contentType: ContentType) : AndroidViewModel(application) {
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main +  viewModelJob)
 
-    private val _contentType = MutableLiveData<Int>()
-    val contentType: LiveData<Int>
+    private val _contentType = MutableLiveData<ContentType>()
+    val contentType: LiveData<ContentType>
         get() = _contentType
 
     val questions = dao.getUserQuestions()

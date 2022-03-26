@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.truthordaregame.ContentType
 import com.example.truthordaregame.R
 import com.example.truthordaregame.databinding.FragmentGameContentBinding
 
@@ -32,10 +33,10 @@ class GameContentFragment : Fragment() {
 
         viewModel.contentType.observe(viewLifecycleOwner, { newContentType ->
             val actionBar = (activity as AppCompatActivity?)!!.supportActionBar
-            if (newContentType == 1)
-                actionBar?.setTitle(R.string.truth_button)
-            else
-                actionBar?.setTitle(R.string.action_button)
+            when(newContentType){
+                ContentType.QUESTION -> actionBar?.setTitle(R.string.truth_button)
+                ContentType.DARE -> actionBar?.setTitle(R.string.action_button)
+            }
         })
 
         viewModel.content.observe(viewLifecycleOwner, {   newContent ->

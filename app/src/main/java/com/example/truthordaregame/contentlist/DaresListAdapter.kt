@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.truthordaregame.ContentType
 import com.example.truthordaregame.R
 import com.example.truthordaregame.database.Dare
 
@@ -28,7 +29,7 @@ class DaresListAdapter(var viewModel: ContentListViewModel): RecyclerView.Adapte
         }
 
         holder.card.setOnClickListener{
-            it.findNavController().navigate(ContentListFragmentDirections.actionContentListFragmentToEditContentFragment(item.dareID, item.dareString,2))
+            it.findNavController().navigate(ContentListFragmentDirections.actionContentListFragmentToEditContentFragment(item.dareID, item.dareString,ContentType.DARE))
         }
     }
 
